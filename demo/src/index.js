@@ -1,36 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
 
-import ReactTextDatepicker from "../../src";
+import TextDatepicker from "../../src/";
 
-class Demo extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onDateChange = this.onDateChange.bind(this);
-
-    this.state = {
-      date: new Date()
-    };
-  }
-
-  onDateChange(newValue) {
-    this.setState(() => {
-      return { date: newValue };
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>react-text-datepicker Demo</h1>
-        <ReactTextDatepicker
-          value={this.state.date}
-          onChange={this.onDateChange}
-        />
-      </div>
-    );
-  }
-}
+const Demo = () => (
+  <div>
+    <h1>react-text-datepicker Demo</h1>
+    <TextDatepicker
+      onChange={newValue => console.log("Date has changed: ", newValue)}
+    />
+  </div>
+);
 
 render(<Demo />, document.querySelector("#demo"));

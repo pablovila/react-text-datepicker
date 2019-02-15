@@ -1,193 +1,142 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import "./style.css";
+import TextInput from "./TextInput";
+
+/**
+ * Get the number of days in any particular month
+ * @link https://stackoverflow.com/a/1433119/1293256
+ * @param  {Number} m The month (valid: 0-11)
+ * @param  {Number} y The year
+ * @return {Number}   The number of days in the month
+ */
+const daysInMonth = (m, y) => {
+  switch (m) {
+    case 1:
+      return (y % 4 == 0 && y % 100) || y % 400 == 0 ? 29 : 28;
+    case 8:
+    case 3:
+    case 5:
+    case 10:
+      return 30;
+    default:
+      return 31;
+  }
+};
+
+/**
+ * Check if a date is valid
+ * @link https://stackoverflow.com/a/1433119/1293256
+ * @param  {Number}  d The day
+ * @param  {Number}  m The month
+ * @param  {Number}  y The year
+ * @return {Boolean}   Returns true if valid
+ */
+const isAValidPartialDate = (d, m, y) => {
+  m = parseInt(m, 10) - 1;
+  return m >= 0 && m < 12 && d > 0 && d <= daysInMonth(m, y);
+};
 
 const isValidDate = value => {
   const dateWrapper = new Date(value);
   return !isNaN(dateWrapper.getDate());
 };
 
-class ReactTextDatepicker extends Component {
-  constructor(props) {
-    super(props);
+const TextDatepicker = props => {
+  const dateValue =
+    props.value && isValidDate(props.value) ? new Date(props.value) : null;
 
-    this.onDayChange = this.onDayChange.bind(this);
-    this.onMonthChange = this.onMonthChange.bind(this);
-    this.onYearChange = this.onYearChange.bind(this);
+  const dayValue = dateValue ? `${props.value.getDate()}` : "";
+  const monthValue = dateValue ? `${props.value.getMonth() + 1}` : "";
+  const yearValue = dateValue ? `${props.value.getFullYear()}` : "";
 
-    let dayValue = null;
-    let monthValue = null;
-    let yearValue = null;
+  const [day, setDay] = useState(dayValue);
+  const [month, setMonth] = useState(monthValue);
+  const [year, setYear] = useState(yearValue);
 
-    if (props.value && isValidDate(props.value)) {
-      dayValue = props.value.getDate();
-      monthValue = props.value.getMonth() + 1;
-      yearValue = props.value.getFullYear();
+  useEffect(() => {
+    if (year && year.length === 4 && month && day && props.onChange) {
+      if (isAValidPartialDate(day, month, year)) {
+        props.onChange(new Date(Number(year), Number(month) - 1, Number(day)));
+      } else {
+        props.onChange("Invalid date");
+      }
     }
+  });
 
-    this.state = {
-      dayValue: dayValue,
-      monthValue: monthValue,
-      yearValue: yearValue,
-      value: props.value
-    };
-  }
+  const Separator = () => <span className="separator">{props.separator}</span>;
 
-  onDayChange(evt) {
-    const day = evt.target.value;
-    this.setState(() => {
-      return { dayValue: day };
-    });
-  }
+  const onInputChange = evt => {
+    const target = evt.target;
+    const value = target.value;
+    const name = target.name;
 
-  onMonthChange(evt) {
-    const month = evt.target.value;
-    this.setState(() => {
-      return { monthValue: month };
-    });
-  }
-
-  onYearChange(evt) {
-    const year = evt.target.value;
-    this.setState(() => {
-      return { yearValue: year };
-    });
-  }
-
-  render() {
-    const Fragment = React.Fragment;
-
-    const DayInput = () => (
-      <input
-        type="text"
-        className="rtdp-input rtdp-day"
-        placeholder={this.props.hints ? this.props.dayHint : null}
-        value={this.state.dayValue}
-        onChange={this.onDayChange}
-      />
-    );
-    const MonthInput = () => (
-      <input
-        type="text"
-        className="rtdp-input rtdp-month"
-        placeholder={this.props.hints ? this.props.monthHint : null}
-        value={this.state.monthValue}
-        onChange={this.onMonthChange}
-      />
-    );
-
-    const YearInput = () => (
-      <input
-        type="text"
-        className="rtdp-input rtdp-year"
-        placeholder={this.props.hints ? this.props.yearHint : null}
-        value={this.state.yearValue}
-        onChange={this.onYearChange}
-      />
-    );
-
-    const Separator = () => (
-      <span className="separator">{this.props.separator}</span>
-    );
-
-    const orderedInputs = {
-      DMY: (
-        <Fragment>
-          <DayInput />
-          <Separator />
-          <MonthInput />
-          <Separator />
-          <YearInput />
-        </Fragment>
-      ),
-      DYM: (
-        <Fragment>
-          <DayInput />
-          <Separator />
-          <YearInput />
-          <Separator />
-          <MonthInput />
-        </Fragment>
-      ),
-      MDY: (
-        <Fragment>
-          <MonthInput />
-          <Separator />
-          <DayInput />
-          <Separator />
-          <YearInput />
-        </Fragment>
-      ),
-      MYD: (
-        <Fragment>
-          <MonthInput />
-          <Separator />
-          <YearInput />
-          <Separator />
-          <DayInput />
-        </Fragment>
-      ),
-      YDM: (
-        <Fragment>
-          <YearInput />
-          <Separator />
-          <DayInput />
-          <Separator />
-          <MonthInput />
-        </Fragment>
-      ),
-      YMD: (
-        <Fragment>
-          <YearInput />
-          <Separator />
-          <MonthInput />
-          <Separator />
-          <DayInput />
-        </Fragment>
-      )
-    };
-
-    let fieldOrder = this.props.fieldOrder;
-    if (Object.keys(orderedInputs).indexOf(fieldOrder) === -1) {
-      console.warn(
-        "Field order is invalid. Please check fieldOrder attribute in your react-text-datepicker component"
-      );
-      fieldOrder = "DMY";
+    switch (name) {
+      case "day-input":
+        setDay(value);
+        break;
+      case "month-input":
+        setMonth(value);
+        break;
+      case "year-input":
+        setYear(value);
+        break;
     }
+  };
 
-    const OrderedInput = () => orderedInputs[fieldOrder];
-
-    return (
-      <span className="rtdp">
-        <span className="rtdp-inner">
-          <OrderedInput />
-        </span>
+  return (
+    <span className="rtdp">
+      <span className="rtdp-inner">
+        <TextInput
+          name="day-input"
+          className="rtdp-day"
+          value={day}
+          hintText={props.hints ? props.dayHint : null}
+          onInputChange={onInputChange}
+          maxLength={2}
+        />
+        <Separator />
+        <TextInput
+          name="month-input"
+          className="rtdp-month"
+          value={month}
+          hintText={props.hints ? props.monthHint : null}
+          onInputChange={onInputChange}
+          maxLength={2}
+        />
+        <Separator />
+        <TextInput
+          name="year-input"
+          className="rtdp-year"
+          value={year}
+          hintText={props.hints ? props.yearHint : null}
+          onInputChange={onInputChange}
+          maxLength={4}
+        />
       </span>
-    );
-  }
-}
+    </span>
+  );
+};
 
-ReactTextDatepicker.defaultProps = {
+TextDatepicker.defaultProps = {
   value: null,
   separator: "/",
   hints: true,
   dayHint: "DD",
   monthHint: "MM",
   yearHint: "YYYY",
-  fieldOrder: "DMY",
   onChange: null
 };
 
-ReactTextDatepicker.propTypes = {
+TextDatepicker.propTypes = {
   value: PropTypes.object,
   separator: PropTypes.string,
   hints: PropTypes.bool,
   dayHint: PropTypes.string,
   monthHint: PropTypes.string,
   yearHint: PropTypes.string,
-  fieldOrder: PropTypes.string,
   onChange: PropTypes.func
 };
 
-export default ReactTextDatepicker;
+export default TextDatepicker;

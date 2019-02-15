@@ -27,14 +27,23 @@
   },
   "devDependencies": {
     "nwb": "0.23.x",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
-  "author": "",
-  "homepage": "",
+  "author": {
+    "name": "Pablo Vila",
+    "email": "pablo.vilafer@gmail.com",
+    "url": "https://www.pablovila.com"
+  },
+  "homepage": "https://www.pablovila.com/react-text-datepicker/",
   "license": "MIT",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pablovila/react-text-datepicker"
+  },
   "keywords": [
-    "react-component"
+    "react-component",
+    "datepicker",
+    "text-datepicker"
   ]
 }
