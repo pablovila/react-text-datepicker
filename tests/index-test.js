@@ -5,6 +5,7 @@ import { Simulate } from "react-dom/test-utils";
 
 import TextDatepicker from "src/";
 
+
 describe("TextDatepicker", () => {
   let node;
 
