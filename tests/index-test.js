@@ -3,7 +3,7 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 
-import TextDatepicker from "src/TextDatepicker";
+import TextDatepicker from "src/";
 
 describe("TextDatepicker", () => {
   let node;
