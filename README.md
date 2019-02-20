@@ -6,7 +6,7 @@
 
 Sometimes you don't want a calendar datepicker for your forms. Everybody knows his/her own birthday or other important dates that they can enter using old-fashion keyboard. This package helps you with this.
 
-![react-text-datepicker example](https://raw.githubusercontent.com/pablovila/react-text-datepicker/master/src/react-text-datepicker.png)
+![react-text-datepicker example](https://raw.githubusercontent.com/pablovila/react-text-datepicker/master/demo/react-text-datepicker.png)
 
 [build-badge]: https://img.shields.io/travis/pablovila/react-text-datepicker/master.png?style=flat-square
 [build]: https://travis-ci.org/pablovila/react-text-datepicker
