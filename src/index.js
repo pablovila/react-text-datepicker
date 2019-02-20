@@ -65,7 +65,9 @@ const TextDatepicker = props => {
     }
   });
 
-  const Separator = () => <span className="separator">{props.separator}</span>;
+  const Separator = () => (
+    <span className="rtdp-separator">{props.separator}</span>
+  );
 
   const onInputChange = evt => {
     const target = evt.target;
