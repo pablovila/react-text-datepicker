@@ -12,3 +12,52 @@ Sometimes you don't want a calendar datepicker for your forms. Everybody knows h
 [npm]: https://www.npmjs.org/package/react-text-datepicker
 [coveralls-badge]: https://img.shields.io/coveralls/pablovila/react-text-datepicker/master.png?style=flat-square
 [coveralls]: https://coveralls.io/github/pablovila/react-text-datepicker
+
+## Installation
+
+Install it from npm and include it in your React build process (using [Webpack](http://webpack.github.io/), [Browserify](http://browserify.org/), etc).
+
+```bash
+npm install --save react-text-datepicker
+```
+
+or:
+
+```bash
+yarn add react-text-datepicker
+```
+
+## Usage
+
+```javascript static
+import React from "react";
+import TextDatepicker from "react-text-datepicker";
+
+class MyComponent extends React.Component {
+  onChange(newValue) {
+    // Gets new value
+  }
+
+  render() {
+    return <TextDatepicker value={new Date()} onChange={this.onChange} />;
+  }
+}
+```
+
+## Props
+
+Common props you may want to specify include:
+
+| prop        | Description                                               | Default Value |
+| ----------- | --------------------------------------------------------- | ------------- |
+| `dayHint`   | change the text displayed as placeholder for day input    | `DD`          |
+| `hints`     | specify if you want to display placeholder for each input | `true`        |
+| `monthHint` | change the text displayed as placeholder for month input  | `MM`          |
+| `onChange`  | subscribe to change events                                | `null`        |
+| `separator` | change the text displayed between parts of date           | `/`           |
+| `value`     | control the current value                                 | `null`        |
+| `yearHint`  | change the text displayed as placeholder for year input   | `YYYY`        |
+
+## License
+
+MIT

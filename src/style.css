@@ -46,11 +46,11 @@ span.rtdp.readonly input {
   color: #666666;
 }
 
-span.rtdp input.hint {
+span.rtdp input.rtdp-hint {
   color: #999999;
 }
 
-span.rtdp span.separator {
+span.rtdp span.rtdp-separator {
   color: #999999;
 }
 

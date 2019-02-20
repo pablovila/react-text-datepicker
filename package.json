@@ -1,6 +1,6 @@
 {
   "name": "react-text-datepicker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "react-text-datepicker React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
     "email": "pablo.vilafer@gmail.com",
     "url": "https://www.pablovila.com"
   },
-  "homepage": "https://www.pablovila.com/react-text-datepicker/",
+  "homepage": "https://github.com/pablovila/react-text-datepicker",
   "license": "MIT",
   "repository": {
     "type": "git",
