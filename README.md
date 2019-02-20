@@ -6,6 +6,8 @@
 
 Sometimes you don't want a calendar datepicker for your forms. Everybody knows his/her own birthday or other important dates that they can enter using old-fashion keyboard. This package helps you with this.
 
+![react-text-datepicker example](https://raw.githubusercontent.com/pablovila/react-text-datepicker/master/src/react-text-datepicker.png)
+
 [build-badge]: https://img.shields.io/travis/pablovila/react-text-datepicker/master.png?style=flat-square
 [build]: https://travis-ci.org/pablovila/react-text-datepicker
 [npm-badge]: https://img.shields.io/npm/v/react-text-datepicker.png?style=flat-square
@@ -34,12 +36,24 @@ import React from "react";
 import TextDatepicker from "react-text-datepicker";
 
 class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      myDate: new Date()
+    };
+    this.onChange = this.onChange.bind(this);
+  }
+
   onChange(newValue) {
-    // Gets new value
+    this.setState({
+      myDate: newValue
+    });
   }
 
   render() {
-    return <TextDatepicker value={new Date()} onChange={this.onChange} />;
+    return (
+      <TextDatepicker value={this.state.myDate} onChange={this.onChange} />
+    );
   }
 }
 ```
